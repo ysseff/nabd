@@ -1,0 +1,95 @@
+<main class="dashboard-page d-flex">
+    <aside ng-include="'views/shared/sidebar.html'"></aside>
+
+    <section class="dashboard-content">
+        <header ng-include="'views/shared/topbar.html'"></header>
+
+        <div class="dashboard-body management-page-content container-fluid">
+            <h1 class="management-page-title">Sales</h1>
+            <p class="management-page-subtitle">Invoice history</p>
+
+            <div class="page-search d-flex align-items-center">
+                <iconify-icon icon="iconamoon:search"></iconify-icon>
+                <input type="text" class="form-control border-0 shadow-none" placeholder="Search invoices..." ng-model="tableSearchText">
+            </div>
+
+            <nabd-table headers="tableHeaders" rows="tableRows" search-text="tableSearchText" search-key="invoice" on-action-click="openSaleDetails(row, $event)"></nabd-table>
+        </div>
+    </section>
+
+    <div class="details-overlay" ng-show="isDetailsDrawerOpen" ng-click="closeSaleDetails()"></div>
+    <section class="details-drawer" ng-show="isDetailsDrawerOpen">
+        <div class="details-header d-flex align-items-start justify-content-between">
+            <h2>Invoice Details</h2>
+            <iconify-icon icon="ep:arrow-right-bold" ng-click="closeSaleDetails()"></iconify-icon>
+        </div>
+
+        <div class="details-body">
+            <div class="details-loading" ng-show="isDetailsDrawerLoading">Loading...</div>
+            <div class="details-error" ng-show="!isDetailsDrawerLoading && drawerErrorMessage">{{drawerErrorMessage}}</div>
+
+            <div ng-show="!isDetailsDrawerLoading && !drawerErrorMessage && selectedRecord">
+                <div class="details-row first-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Invoice</span>
+                    <span class="details-value">{{selectedRecord.invoice}}</span>
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Date</span>
+                    <span class="details-value">{{selectedRecord.date}}</span>
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Employee</span>
+                    <span class="details-value">{{selectedRecord.employee}}</span>
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Payment</span>
+                    <span class="details-value">{{selectedRecord.payment}}</span>
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Status</span>
+                    <span class="details-value">{{selectedRecord.status}}</span>
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-row items-row">
+                    <span class="details-label">Items</span>
+                </div>
+
+                <div class="details-item-card d-flex align-items-center justify-content-between" ng-repeat="item in selectedItems track by $index">
+                    <span>{{item.title}}</span>
+                    <span>{{item.total}}</span>
+                </div>
+
+                <div class="details-separator items-separator"></div>
+
+                <div class="details-row subtotal-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Subtotal</span>
+                    <span class="details-value">{{selectedRecord.subtotal}}</span>
+                </div>
+
+                <div class="details-row discount-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Discount</span>
+                    <span class="details-value">{{selectedRecord.discountPercent}}</span>
+                </div>
+
+                <div class="details-total-row d-flex align-items-center justify-content-between">
+                    <span>Total</span>
+                    <span>{{selectedRecord.total}}</span>
+                </div>
+
+                <div class="details-actions">
+                    <button type="button" class="primary-action-btn btn" ng-click="printReceipt()">Print Receipt</button>
+                    <button type="button" class="danger-action-btn btn" ng-show="isAdmin && selectedRecord.status != 'Voided'" ng-click="voidSale()" ng-disabled="isVoidingSale">{{isVoidingSale ? 'Voiding...' : 'Void Receipt'}}</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

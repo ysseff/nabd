@@ -1,0 +1,19 @@
+<div class="data-table-wrapper">
+    <table class="data-table table mb-0 align-middle">
+        <thead>
+            <tr>
+                <th ng-repeat="header in headers track by $index">{{header.label}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in (rows | filter:filterRows) track by $index">
+                <td ng-repeat="header in headers track by $index">
+                    <span class="cell-primary" ng-if="header.type == 'primary'">{{row[header.key]}}</span>
+                    <span class="cell-muted" ng-if="header.type == 'muted'">{{row[header.key]}}</span>
+                    <span class="payment-pill" ng-if="header.type == 'pill'">{{row[header.key]}}</span>
+                    <a href="" class="view-link" ng-if="header.type == 'link'" ng-click="onActionClick({ row: row, $event: $event })">{{row[header.key]}}</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

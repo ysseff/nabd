@@ -1,0 +1,35 @@
+<main class="login-page container-fluid p-0">
+    <section class="left-panel d-flex align-items-center justify-content-center">
+        <div class="login-content px-3">
+            <h1 class="login-title">Login</h1>
+            <p class="login-subtitle">Sign in to your pharmacy management account</p>
+
+            <form class="login-form" ng-submit="login()">
+                <div class="form-group mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter your email" ng-model="email" ng-change="validateLogin()">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter your password" ng-model="password" ng-change="validateLogin()">
+                </div>
+
+                <label class="remember-me form-check">
+                    <input type="checkbox">
+                    <span>Remember me</span>
+                </label>
+
+                <button type="submit" class="login-btn" ng-disabled="loading">{{loading ? 'Logging in...' : 'Login'}}</button>
+
+                <p class="status-message error-message" ng-show="errorMessage">{{errorMessage}}</p>
+                <p class="status-message success-message" ng-show="successMessage">{{successMessage}}</p>
+            </form>
+        </div>
+    </section>
+
+    <section class="right-panel d-flex align-items-center justify-content-center">
+        <img src="assets/images/logo.png" alt="nabd logo" class="nabd-logo">
+        <p class="copyright">© 2026 All rights reserved.</p>
+    </section>
+</main>

@@ -1,0 +1,135 @@
+<main class="dashboard-page d-flex">
+    <aside ng-include="'views/shared/sidebar.html'"></aside>
+
+    <section class="dashboard-content">
+        <header ng-include="'views/shared/topbar.html'"></header>
+
+        <div class="dashboard-body products-page-content container-fluid">
+            <h1 class="products-page-title">Products</h1>
+            <p class="products-page-subtitle">{{products.length}} products</p>
+
+            <div class="products-toolbar d-flex align-items-center justify-content-between">
+                <div class="products-toolbar-left d-flex align-items-center">
+                    <div class="products-search d-flex align-items-center">
+                        <iconify-icon icon="iconamoon:search"></iconify-icon>
+                        <input type="text" class="form-control border-0 shadow-none" placeholder="Search products..." ng-model="searchQuery">
+                    </div>
+
+                    <div class="products-category-filters d-flex align-items-center">
+                        <button type="button" class="products-filter-btn btn" ng-class="{'active': selectedCategory === 'All'}" ng-click="setCategory('All')">All</button>
+                        <button type="button" class="products-filter-btn btn" ng-class="{'active': selectedCategory === 'Antibiotics'}" ng-click="setCategory('Antibiotics')">Antibiotics</button>
+                        <button type="button" class="products-filter-btn btn" ng-class="{'active': selectedCategory === 'Cosmetics'}" ng-click="setCategory('Cosmetics')">Cosmetics</button>
+                        <button type="button" class="products-filter-btn btn" ng-class="{'active': selectedCategory === 'Other'}" ng-click="setCategory('Other')">Other</button>
+                        <button type="button" class="products-filter-btn btn" ng-class="{'active': selectedCategory === 'Low Stock'}" ng-click="setCategory('Low Stock')">Low Stock</button>
+                    </div>
+                </div>
+
+                <button type="button" class="products-add-btn btn" ng-if="isAdmin" ng-click="openCreateProduct()">Add Product</button>
+            </div>
+
+            <div class="products-table-wrapper">
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Batch</th>
+                            <th>Expiry</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="product in products | filter:searchFilter">
+                            <td class="cell-primary">{{$index + 1}}</td>
+                            <td class="cell-primary">{{product.name}}</td>
+                            <td class="cell-muted">{{product.category}}</td>
+                            <td class="cell-muted">{{product.batch_no}}</td>
+                            <td class="cell-muted">{{product.expiry_date | date:'yyyy-MM-dd'}}</td>
+                            <td class="cell-muted">{{product.quantity}}</td>
+                            <td class="cell-muted">{{product.unit_price | currency}}</td>
+                            <td><a href="" class="view-link" ng-click="openProductDetails(product, $event)">View</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="page-load-error" ng-show="tableErrorMessage">{{tableErrorMessage}}</p>
+        </div>
+    </section>
+
+    <div class="details-overlay" ng-show="isDetailsDrawerOpen" ng-click="closeProductDetails()"></div>
+    <section class="details-drawer" ng-show="isDetailsDrawerOpen">
+        <div class="details-header d-flex align-items-start justify-content-between">
+            <h2>{{isCreatingProduct ? 'Add Product' : 'Product Details'}}</h2>
+            <iconify-icon icon="ep:arrow-right-bold" ng-click="closeProductDetails()"></iconify-icon>
+        </div>
+
+        <div class="details-body">
+            <div class="details-loading" ng-show="isDetailsDrawerLoading">Loading...</div>
+            <div class="details-error" ng-show="!isDetailsDrawerLoading && drawerErrorMessage">{{drawerErrorMessage}}</div>
+
+            <div class="supplier-details-content" ng-show="!isDetailsDrawerLoading && !drawerErrorMessage && selectedProduct">
+                <div class="details-item-card supplier-name-card d-flex align-items-center">
+                    <span ng-show="!isEditingProduct">{{selectedProduct.name || '-'}}</span>
+                    <input type="text" class="details-input supplier-title-input form-control" ng-show="isEditingProduct" placeholder="Product name" ng-model="productForm.name">
+                </div>
+
+                <div class="details-row supplier-first-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Brand</span>
+                    <span class="details-value" ng-show="!isEditingProduct">{{selectedProduct.brand || '-'}}</span>
+                    <input type="text" class="details-input form-control" ng-show="isEditingProduct" placeholder="Brand" ng-model="productForm.brand">
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Category</span>
+                    <span class="details-value" ng-show="!isEditingProduct">{{selectedProduct.category || '-'}}</span>
+                    <input type="text" class="details-input form-control" ng-show="isEditingProduct" placeholder="Category" ng-model="productForm.category">
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Batch No</span>
+                    <span class="details-value" ng-show="!isEditingProduct">{{selectedProduct.batch_no || '-'}}</span>
+                    <input type="text" class="details-input form-control" ng-show="isEditingProduct" placeholder="Batch No" ng-model="productForm.batch_no">
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Expiry Date</span>
+                    <span class="details-value" ng-show="!isEditingProduct">{{selectedProduct.expiry_date | date:'yyyy-MM-dd'}}</span>
+                    <input type="date" class="details-input form-control" ng-show="isEditingProduct" ng-model="productForm.expiry_date" min="{{minExpiryDate}}">
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Quantity</span>
+                    <span class="details-value" ng-show="!isEditingProduct">{{selectedProduct.quantity}}</span>
+                    <input type="number" min="1" class="details-input form-control" ng-show="isEditingProduct" placeholder="Quantity" ng-model="productForm.quantity">
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Unit Price</span>
+                    <span class="details-value" ng-show="!isEditingProduct">{{selectedProduct.unit_price | currency}}</span>
+                    <input type="number" step="0.01" class="details-input form-control" ng-show="isEditingProduct" placeholder="Unit price" ng-model="productForm.unit_price">
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Supplier</span>
+                    <span class="details-value" ng-show="!isEditingProduct">{{selectedProduct.supplier_name || getSupplierNameById(selectedProduct.supplier_id) || '-'}}</span>
+                    <select class="details-input details-select form-control" ng-show="isEditingProduct" ng-model="productForm.supplier_id" ng-options="supplier.id as supplier.name for supplier in suppliers"></select>
+                </div>
+                <div class="details-separator product-actions-separator"></div>
+
+                <div class="details-actions supplier-actions-bottom product-drawer-actions" ng-if="isAdmin">
+                    <button type="button" class="primary-action-btn btn" ng-click="saveProduct()">{{isEditingProduct ? (isUpdatingProduct ? 'Saving...' : 'Save') : 'Update Product'}}</button>
+                    <button type="button" class="danger-action-btn btn" ng-show="!isEditingProduct && !isCreatingProduct" ng-click="deleteProduct()">{{isUpdatingProduct ? 'Deleting...' : 'Delete Product'}}</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

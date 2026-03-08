@@ -1,0 +1,90 @@
+.preferences-page-content {
+    padding-bottom: 30px;
+}
+
+.preferences-page-title {
+    margin: 30px 0 0 46px;
+    color: #2A2B33;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.preferences-page-subtitle {
+    margin: 4px 0 0 46px;
+    color: #9D9D9D;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.preferences-form-wrapper {
+    margin: 24px 46px 0;
+    border: 1px solid #D5D7EA;
+    border-radius: 30px;
+    background-color: #FFFFFF;
+    overflow: hidden;
+}
+
+.preferences-form-header {
+    height: 74px;
+    border-bottom: 1px solid #D5D7EA;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    color: #2A2B33;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.preferences-form-body {
+    padding: 28px 30px 32px;
+}
+
+.preferences-form-label {
+    color: #47495D;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.preferences-form-input {
+    height: 46px;
+    border: 1px solid #D5D7EA;
+    border-radius: 12px;
+    color: #2A2B33;
+    font-size: 14px;
+    box-shadow: none !important;
+}
+
+.preferences-form-input:focus {
+    border-color: #D5D7EA;
+    box-shadow: none !important;
+}
+
+.preferences-textarea {
+    height: auto;
+    min-height: 120px;
+    resize: vertical;
+}
+
+.preferences-form-actions {
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.preferences-form-actions .primary-action-btn {
+    width: 190px;
+}
+
+@media (max-width: 1100px) {
+    .preferences-page-title,
+    .preferences-page-subtitle {
+        margin-left: 22px;
+    }
+
+    .preferences-form-wrapper {
+        margin-left: 22px;
+        margin-right: 22px;
+    }
+}

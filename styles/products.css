@@ -1,0 +1,334 @@
+.products-page-content {
+    padding-bottom: 30px;
+}
+
+.products-page-title {
+    margin: 30px 0 0 46px;
+    color: #2A2B33;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.products-page-subtitle {
+    margin: 4px 0 0 46px;
+    color: #9D9D9D;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.products-toolbar {
+    margin: 28px 46px 0;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.products-toolbar-left {
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.products-search {
+    width: 335px;
+    height: 45px;
+    border: 1px solid #D5D7EA;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    gap: 10px;
+    padding: 0 14px;
+}
+
+.products-search iconify-icon {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px;
+    min-height: 20px;
+    font-size: 20px;
+    color: #9596A8;
+}
+
+.products-search input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #2A2B33;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+}
+
+.products-search input::placeholder {
+    color: #9596A8;
+}
+
+.products-category-filters {
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.products-filter-btn {
+    height: 36px;
+    border: 1px solid #D5D7EA;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    color: #47495D;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0 14px;
+}
+
+.products-filter-btn.active {
+    background-color: #2A2B33;
+    border-color: #2A2B33;
+    color: #FFFFFF;
+}
+
+.products-filter-btn:hover,
+.products-filter-btn:focus,
+.products-filter-btn:active {
+    background-color: #FFFFFF !important;
+    border-color: #D5D7EA !important;
+    color: #47495D !important;
+    box-shadow: none !important;
+}
+
+.products-filter-btn.active:hover,
+.products-filter-btn.active:focus,
+.products-filter-btn.active:active {
+    background-color: #2A2B33 !important;
+    border-color: #2A2B33 !important;
+    color: #FFFFFF !important;
+}
+
+.products-add-btn {
+    width: 157px;
+    height: 40px;
+    border: none;
+    border-radius: 15px;
+    background-color: #2A2B33;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.products-add-btn:hover,
+.products-add-btn:focus,
+.products-add-btn:active {
+    background-color: #2A2B33 !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+.products-table-wrapper {
+    margin: 24px 46px 0;
+    min-height: 600px;
+    border: 1px solid #D5D7EA;
+    border-radius: 30px;
+    background-color: #FFFFFF;
+    overflow: hidden;
+}
+
+.products-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.products-table thead tr {
+    height: 64px;
+}
+
+.products-table th {
+    color: #9596A8;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    vertical-align: middle;
+    padding: 0 18px;
+    border-bottom: 1px solid #D5D7EA;
+}
+
+.products-table tbody tr {
+    height: 72px;
+}
+
+.products-table td {
+    padding: 0 18px;
+    border-bottom: 1px solid #D5D7EA;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.product-details-drawer {
+    width: 525px !important;
+    border-radius: 30px 0 0 30px;
+}
+
+.product-details-drawer .offcanvas-title {
+    margin: 0;
+    color: #2A2B33;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.product-details-drawer .offcanvas-header {
+    margin: 20px 24px 0 24px;
+    padding: 12px 0 16px;
+}
+
+.product-details-drawer .offcanvas-body {
+    padding: 20px 24px 28px;
+}
+
+.product-detail-header-card {
+    border-radius: 16px;
+    background-color: #F3F4FD;
+    padding: 16px 18px;
+    margin-bottom: 18px;
+}
+
+.product-detail-header-card h4 {
+    margin: 0;
+    color: #2A2B33;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.product-detail-header-card h6 {
+    margin: 4px 0 0;
+    color: #9D9D9D;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.product-details-card {
+    border: 1px solid #D5D7EA;
+    border-radius: 20px;
+    background-color: #FFFFFF;
+    padding: 8px 14px;
+}
+
+.product-detail-row {
+    margin: 0;
+}
+
+.product-detail-actions {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 28px;
+}
+
+.product-detail-actions .primary-action-btn,
+.product-detail-actions .danger-action-btn {
+    width: 100%;
+    margin: 0;
+}
+
+.product-form-wrapper {
+    margin: 24px 46px 0;
+    border: 1px solid #D5D7EA;
+    border-radius: 30px;
+    background-color: #FFFFFF;
+    padding: 30px;
+}
+
+.product-form-label {
+    color: #47495D;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.product-form-input {
+    height: 46px;
+    border: 1px solid #D5D7EA;
+    border-radius: 12px;
+    color: #2A2B33;
+    font-size: 14px;
+    box-shadow: none !important;
+}
+
+.product-form-input:focus {
+    border-color: #D5D7EA;
+    box-shadow: none !important;
+}
+
+.product-form-actions {
+    margin-top: 26px;
+    display: flex;
+    gap: 12px;
+}
+
+.product-form-actions .primary-action-btn {
+    width: 200px;
+}
+
+.product-cancel-btn {
+    width: 170px;
+    height: 44px;
+    border: 1px solid #D5D7EA;
+    border-radius: 15px;
+    background-color: #FFFFFF;
+    color: #47495D;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-cancel-btn:hover,
+.product-cancel-btn:focus,
+.product-cancel-btn:active {
+    background-color: #FFFFFF !important;
+    color: #47495D !important;
+    border-color: #D5D7EA !important;
+    box-shadow: none !important;
+}
+
+@media (max-width: 1100px) {
+    .products-page-title,
+    .products-page-subtitle {
+        margin-left: 22px;
+    }
+
+    .products-toolbar,
+    .products-table-wrapper,
+    .product-form-wrapper {
+        margin-left: 22px;
+        margin-right: 22px;
+    }
+
+    .products-search {
+        width: 100%;
+        max-width: 420px;
+    }
+
+    .products-add-btn {
+        width: 140px;
+    }
+
+    .product-details-drawer {
+        width: 100% !important;
+        border-radius: 0;
+    }
+}
+
+.product-actions-separator {
+    margin-top: 18px;
+}
+
+.product-drawer-actions {
+    margin-top: 24px;
+}

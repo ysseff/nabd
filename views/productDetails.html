@@ -1,0 +1,58 @@
+<main class="dashboard-page d-flex">
+    <aside ng-include="'views/shared/sidebar.html'"></aside>
+
+    <section class="dashboard-content">
+        <header ng-include="'views/shared/topbar.html'"></header>
+
+        <div class="dashboard-body products-page-content container-fluid">
+            <h1 class="products-page-title">Product Details</h1>
+            <p class="products-page-subtitle">Review and manage selected product</p>
+
+            <div class="offcanvas offcanvas-end product-details-drawer" tabindex="-1" id="productDetailsDrawer">
+                <div class="offcanvas-header border-bottom">
+                    <h5 class="offcanvas-title">Product Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+                </div>
+
+                <div class="offcanvas-body d-flex flex-column h-100" ng-if="product">
+                    <div class="product-detail-header-card">
+                        <h4>{{product.name}}</h4>
+                        <h6>{{product.brand || '-'}}</h6>
+                    </div>
+
+                    <div class="product-details-card">
+                        <div class="product-detail-row row border-bottom py-2">
+                            <div class="col-5 details-label">Category</div>
+                            <div class="col-7 details-value">{{product.category}}</div>
+                        </div>
+                        <div class="product-detail-row row border-bottom py-2">
+                            <div class="col-5 details-label">Batch No</div>
+                            <div class="col-7 details-value">{{product.batch_no}}</div>
+                        </div>
+                        <div class="product-detail-row row border-bottom py-2">
+                            <div class="col-5 details-label">Expiry Date</div>
+                            <div class="col-7 details-value">{{product.expiry_date | date:'yyyy-MM-dd'}}</div>
+                        </div>
+                        <div class="product-detail-row row border-bottom py-2">
+                            <div class="col-5 details-label">Supplier</div>
+                            <div class="col-7 details-value">{{product.supplier_name || '-'}}</div>
+                        </div>
+                        <div class="product-detail-row row border-bottom py-2">
+                            <div class="col-5 details-label">Quantity</div>
+                            <div class="col-7 details-value">{{product.quantity}}</div>
+                        </div>
+                        <div class="product-detail-row row py-2">
+                            <div class="col-5 details-label">Unit Price</div>
+                            <div class="col-7 details-value">{{product.unit_price | currency}}</div>
+                        </div>
+                    </div>
+
+                    <div class="product-detail-actions">
+                        <a ng-href="#!/updateproductdetail/{{product.id}}" class="primary-action-btn btn">Update Product</a>
+                        <button class="danger-action-btn btn" ng-click="deleteProduct()">Delete Product</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

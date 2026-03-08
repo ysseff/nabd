@@ -1,0 +1,124 @@
+<main class="dashboard-page d-flex">
+    <aside ng-include="'views/shared/sidebar.html'"></aside>
+
+    <section class="dashboard-content">
+        <header ng-include="'views/shared/topbar.html'"></header>
+
+        <div class="dashboard-body checkout-page-content container-fluid">
+            <section class="checkout-left-area">
+                <h1 class="checkout-page-title">Checkout</h1>
+                <p class="checkout-page-subtitle">Scan or search to add items</p>
+
+                <div class="barcode-input d-flex align-items-center">
+                    <iconify-icon icon="lucide:scan-barcode"></iconify-icon>
+                    <input type="text" class="form-control border-0 shadow-none" placeholder="Scan barcode..." ng-model="checkoutBarcodeText">
+                </div>
+
+                <div class="checkout-search d-flex align-items-center">
+                    <iconify-icon icon="iconamoon:search"></iconify-icon>
+                    <input type="text" class="form-control border-0 shadow-none" placeholder="Search products..." ng-model="checkoutSearchText">
+                </div>
+
+                <div class="product-results" ng-show="checkoutSearchText || checkoutBarcodeText">
+                    <div class="product-result-card d-flex align-items-center justify-content-between" ng-repeat="product in (products | filter:{barcode: checkoutBarcodeText} | filter:{name: checkoutSearchText}) track by product.id">
+                        <div class="product-result-main">
+                            <h3>{{product.name}}</h3>
+                            <p>{{formatProductSubtext(product)}}</p>
+                        </div>
+
+                        <div class="product-result-actions d-flex align-items-center">
+                            <span class="product-result-price">{{formatCurrency(product.unit_price)}}</span>
+                            <button type="button" class="add-product-btn btn" ng-click="addToCart(product)"><span class="btn-symbol">+</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout-empty-state" ng-show="!checkoutSearchText && !checkoutBarcodeText">
+                    <iconify-icon icon="lucide:scan-barcode"></iconify-icon>
+                    <p>Scan a barcode or search for products</p>
+                </div>
+            </section>
+
+            <section class="checkout-cart-area">
+                <h2 class="cart-title">Cart</h2>
+                <p class="cart-count">{{cartItems.length}} items</p>
+
+                <div class="cart-divider"></div>
+
+                <p class="cart-empty-text" ng-show="cartItems.length == 0 && !saleCompleted">Cart is empty</p>
+                <div class="cart-items-list" ng-show="cartItems.length > 0">
+                    <div class="cart-item-card d-flex align-items-center justify-content-between" ng-repeat="item in cartItems track by item.id">
+                        <div class="cart-item-main">
+                            <h3>{{item.name}}</h3>
+                            <p>{{formatCurrency(item.unitPrice)}} each</p>
+                        </div>
+
+                        <div class="cart-item-actions d-flex align-items-center">
+                            <button type="button" class="qty-btn btn" ng-click="decrementQuantity(item)"><span class="btn-symbol">-</span></button>
+                            <span class="qty-value">{{item.quantity}}</span>
+                            <button type="button" class="qty-btn btn" ng-click="incrementQuantity(item)"><span class="btn-symbol">+</span></button>
+                            <span class="cart-item-total">{{formatCurrency(item.lineTotal)}}</span>
+                            <button type="button" class="delete-item-btn btn" ng-click="removeFromCart(item)">
+                                <iconify-icon icon="material-symbols:delete-outline-rounded"></iconify-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout-success-state" ng-show="saleCompleted">
+                    <div class="checkout-success-icon-bg">
+                        <iconify-icon icon="qlementine-icons:success-12"></iconify-icon>
+                    </div>
+                    <p>Sale Complete</p>
+                </div>
+
+                <div class="checkout-payment-section" ng-show="!saleCompleted">
+                    <p class="payment-title">Payment Method</p>
+
+                    <div class="payment-methods d-flex align-items-center justify-content-between">
+                        <button type="button" class="payment-method-btn btn" ng-class="{ 'selected': selectedPaymentMethod == 'cash' }" ng-click="selectPaymentMethod('cash')">
+                            <iconify-icon icon="iconoir:cash"></iconify-icon>
+                            <span>Cash</span>
+                        </button>
+
+                        <button type="button" class="payment-method-btn btn" ng-class="{ 'selected': selectedPaymentMethod == 'card' }" ng-click="selectPaymentMethod('card')">
+                            <iconify-icon icon="famicons:card-outline"></iconify-icon>
+                            <span>Card</span>
+                        </button>
+
+                        <button type="button" class="payment-method-btn btn" ng-class="{ 'selected': selectedPaymentMethod == 'apple pay' }" ng-click="selectPaymentMethod('apple pay')">
+                            <iconify-icon icon="mingcute:apple-line"></iconify-icon>
+                            <span>Apple Pay</span>
+                        </button>
+                    </div>
+
+                    <div class="cart-divider summary-divider"></div>
+
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>{{checkoutSubtotal}}</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Discount</span>
+                        <input type="text" class="discount-input form-control" placeholder="0" ng-model="discountPercentInput">
+                    </div>
+
+                    <div class="cart-divider total-divider"></div>
+
+                    <div class="total-row">
+                        <span>Total</span>
+                        <span>{{checkoutTotal}}</span>
+                    </div>
+
+                    <button type="button" class="complete-sale-btn btn" ng-click="completeSale()">{{checkoutLoading ? 'Completing...' : 'Complete Sale'}}</button>
+                    <p class="checkout-message error" ng-show="checkoutErrorMessage">{{checkoutErrorMessage}}</p>
+                </div>
+
+                <div class="checkout-success-action" ng-show="saleCompleted">
+                    <button type="button" class="complete-sale-btn btn" ng-click="goToInvoice()">Go To Invoice</button>
+                </div>
+            </section>
+        </div>
+    </section>
+</main>

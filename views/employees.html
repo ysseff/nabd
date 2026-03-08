@@ -1,0 +1,82 @@
+<main class="dashboard-page d-flex">
+    <aside ng-include="'views/shared/sidebar.html'"></aside>
+
+    <section class="dashboard-content">
+        <header ng-include="'views/shared/topbar.html'"></header>
+
+        <div class="dashboard-body management-page-content container-fluid">
+            <h1 class="management-page-title">Employees</h1>
+            <p class="management-page-subtitle">Team management</p>
+
+            <div class="page-toolbar d-flex align-items-center justify-content-between">
+                <div class="page-search d-flex align-items-center">
+                    <iconify-icon icon="iconamoon:search"></iconify-icon>
+                    <input type="text" class="form-control border-0 shadow-none" placeholder="Search employees..." ng-model="tableSearchText">
+                </div>
+
+                <button type="button" class="page-add-btn btn" ng-if="isAdmin" ng-click="openCreateEmployee()">Add</button>
+            </div>
+
+            <nabd-table headers="tableHeaders" rows="tableRows" search-text="tableSearchText" search-key="name" on-action-click="openEmployeeDetails(row, $event)"></nabd-table>
+            <p class="page-load-error" ng-show="tableErrorMessage">{{tableErrorMessage}}</p>
+        </div>
+    </section>
+
+    <div class="details-overlay" ng-show="isDetailsDrawerOpen" ng-click="closeEmployeeDetails()"></div>
+    <section class="details-drawer" ng-show="isDetailsDrawerOpen">
+        <div class="details-header d-flex align-items-start justify-content-between">
+            <h2>Employee Details</h2>
+            <iconify-icon icon="ep:arrow-right-bold" ng-click="closeEmployeeDetails()"></iconify-icon>
+        </div>
+
+        <div class="details-body">
+            <div class="details-loading" ng-show="isDetailsDrawerLoading">Loading...</div>
+            <div class="details-error" ng-show="!isDetailsDrawerLoading && drawerErrorMessage">{{drawerErrorMessage}}</div>
+
+            <div class="supplier-details-content" ng-show="!isDetailsDrawerLoading && !drawerErrorMessage && selectedRecord">
+                <div class="details-item-card supplier-name-card d-flex align-items-center">
+                    <span ng-show="!isEditingEmployee">{{selectedRecord.name}}</span>
+                    <input type="text" class="details-input supplier-title-input form-control" ng-show="isEditingEmployee" placeholder="Full name" ng-model="employeeForm.name">
+                </div>
+
+                <div class="details-row supplier-first-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Email</span>
+                    <span class="details-value" ng-show="!isEditingEmployee">{{selectedRecord.email}}</span>
+                    <input type="text" class="details-input form-control" ng-show="isEditingEmployee" placeholder="Email" ng-model="employeeForm.email">
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-row d-flex align-items-center justify-content-between" ng-show="isCreatingEmployee && isEditingEmployee">
+                    <span class="details-label">Password</span>
+                    <input type="password" class="details-input form-control" placeholder="Password" ng-model="employeeForm.password">
+                </div>
+                <div class="details-separator" ng-show="isCreatingEmployee && isEditingEmployee"></div>
+
+                <div class="details-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Role</span>
+                    <span class="details-value" ng-show="!isEditingEmployee">{{selectedRecord.role}}</span>
+                    <select class="details-input details-select form-control" ng-show="isEditingEmployee" ng-model="employeeForm.role">
+                        <option value="admin">Admin</option>
+                        <option value="employee">Employee</option>
+                    </select>
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Status</span>
+                    <span class="details-value" ng-show="!isEditingEmployee">{{selectedRecord.status}}</span>
+                    <select class="details-input details-select form-control" ng-show="isEditingEmployee" ng-model="employeeForm.status">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-actions supplier-actions-bottom" ng-if="isAdmin">
+                    <button type="button" class="primary-action-btn btn" ng-if="isCreatingEmployee || !isCurrentSelectedEmployee()" ng-click="updateEmployee()">{{isEditingEmployee ? (isUpdatingEmployee ? 'Saving...' : 'Save') : 'Update Employee'}}</button>
+                    <button type="button" class="danger-action-btn btn" ng-show="!isEditingEmployee && !isCreatingEmployee && !isCurrentSelectedEmployee()" ng-click="deleteEmployee()">{{isUpdatingEmployee ? 'Deleting...' : 'Delete Employee'}}</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

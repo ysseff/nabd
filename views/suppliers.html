@@ -1,0 +1,70 @@
+<main class="dashboard-page d-flex">
+    <aside ng-include="'views/shared/sidebar.html'"></aside>
+
+    <section class="dashboard-content">
+        <header ng-include="'views/shared/topbar.html'"></header>
+
+        <div class="dashboard-body management-page-content container-fluid">
+            <h1 class="management-page-title">Suppliers</h1>
+            <p class="management-page-subtitle">{{tableRows.length}} suppliers</p>
+
+            <div class="page-toolbar d-flex align-items-center justify-content-between">
+                <div class="page-search d-flex align-items-center">
+                    <iconify-icon icon="iconamoon:search"></iconify-icon>
+                    <input type="text" class="form-control border-0 shadow-none" placeholder="Search suppliers..." ng-model="tableSearchText">
+                </div>
+
+                <button type="button" class="page-add-btn btn" ng-if="isAdmin" ng-click="openCreateSupplier()">Add</button>
+            </div>
+
+            <nabd-table headers="tableHeaders" rows="tableRows" search-text="tableSearchText" search-key="supplier" on-action-click="openSupplierDetails(row, $event)"></nabd-table>
+            <p class="page-load-error" ng-show="tableErrorMessage">{{tableErrorMessage}}</p>
+        </div>
+    </section>
+
+    <div class="details-overlay" ng-show="isDetailsDrawerOpen" ng-click="closeSaleDetails()"></div>
+    <section class="details-drawer" ng-show="isDetailsDrawerOpen">
+        <div class="details-header d-flex align-items-start justify-content-between">
+            <h2>Supplier Details</h2>
+            <iconify-icon icon="ep:arrow-right-bold" ng-click="closeSaleDetails()"></iconify-icon>
+        </div>
+
+        <div class="details-body">
+            <div class="details-loading" ng-show="isDetailsDrawerLoading">Loading...</div>
+            <div class="details-error" ng-show="!isDetailsDrawerLoading && drawerErrorMessage">{{drawerErrorMessage}}</div>
+
+            <div class="supplier-details-content" ng-show="!isDetailsDrawerLoading && !drawerErrorMessage && selectedRecord">
+                <div class="details-item-card supplier-name-card d-flex align-items-center">
+                    <span ng-show="!isEditingSupplier">{{selectedRecord.name}}</span>
+                    <input type="text" class="details-input supplier-title-input form-control" ng-show="isEditingSupplier" placeholder="Supplier name" ng-model="supplierForm.name">
+                </div>
+
+                <div class="details-row supplier-first-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Phone</span>
+                    <span class="details-value" ng-show="!isEditingSupplier">{{selectedRecord.phone}}</span>
+                    <input type="text" class="details-input form-control" ng-show="isEditingSupplier" placeholder="Phone number" ng-model="supplierForm.phone">
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Email</span>
+                    <span class="details-value" ng-show="!isEditingSupplier">{{selectedRecord.email}}</span>
+                    <input type="text" class="details-input form-control" ng-show="isEditingSupplier" placeholder="Email" ng-model="supplierForm.email">
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-row d-flex align-items-center justify-content-between">
+                    <span class="details-label">Location</span>
+                    <span class="details-value" ng-show="!isEditingSupplier">{{selectedRecord.location}}</span>
+                    <input type="text" class="details-input form-control" ng-show="isEditingSupplier" placeholder="Location" ng-model="supplierForm.location">
+                </div>
+                <div class="details-separator"></div>
+
+                <div class="details-actions supplier-actions-bottom" ng-if="isAdmin">
+                    <button type="button" class="primary-action-btn btn" ng-click="updateSupplier()">{{isEditingSupplier ? (isUpdatingSupplier ? 'Saving...' : 'Save') : 'Update Supplier'}}</button>
+                    <button type="button" class="danger-action-btn btn" ng-show="!isEditingSupplier && !isCreatingSupplier" ng-click="deleteSupplier()">{{isUpdatingSupplier ? 'Deleting...' : 'Delete Supplier'}}</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

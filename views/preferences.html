@@ -1,0 +1,44 @@
+<main class="dashboard-page d-flex">
+    <aside ng-include="'views/shared/sidebar.html'"></aside>
+
+    <section class="dashboard-content">
+        <header ng-include="'views/shared/topbar.html'"></header>
+
+        <div class="dashboard-body preferences-page-content container-fluid">
+            <h1 class="preferences-page-title">Preferences</h1>
+            <p class="preferences-page-subtitle">Pharmacy preferences and configuration</p>
+
+            <div class="preferences-form-wrapper">
+                <div class="preferences-form-header">Pharmacy Profile</div>
+                <form ng-submit="savePreferences()" class="preferences-form-body">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="form-label preferences-form-label">Pharmacy Name</label>
+                            <input type="text" class="form-control preferences-form-input" ng-model="prefs.name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label preferences-form-label">Email Address</label>
+                            <input type="email" class="form-control preferences-form-input" ng-model="prefs.email">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label preferences-form-label">Phone Number</label>
+                            <input type="tel" class="form-control preferences-form-input" ng-model="prefs.phone">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label preferences-form-label">License Number</label>
+                            <input type="text" class="form-control preferences-form-input" ng-model="prefs.license">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label preferences-form-label">Address</label>
+                            <textarea class="form-control preferences-form-input preferences-textarea" rows="5" ng-model="prefs.address"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="preferences-form-actions">
+                        <button type="submit" class="primary-action-btn btn">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>

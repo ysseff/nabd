@@ -1,0 +1,21 @@
+<div class="app-topbar d-flex align-items-center justify-content-between">
+    <div class="breadcrumb-text">{{pageTitle}}</div>
+
+    <div class="topbar-right d-flex align-items-center">
+        <div class="topbar-search d-flex align-items-center">
+            <iconify-icon icon="iconamoon:search"></iconify-icon>
+            <input type="text" class="form-control border-0 shadow-none" placeholder="Search products, invoices...">
+        </div>
+
+        <div class="topbar-user-wrapper">
+            <div class="topbar-user d-flex align-items-center">
+                <iconify-icon icon="iconoir:profile-circle"></iconify-icon>
+                <iconify-icon icon="oui:arrow-down" class="user-menu-arrow" ng-click="toggleUserMenu($event)"></iconify-icon>
+            </div>
+
+            <div class="topbar-user-menu" ng-show="userMenuOpen">
+                <button type="button" class="logout-btn" ng-click="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+</div>

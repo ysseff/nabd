@@ -1,0 +1,31 @@
+<div class="app-sidebar d-flex flex-column align-items-center">
+    <div class="sidebar-logo-wrapper">
+        <img src="assets/images/nabd-logo.png" alt="nabd logo" class="sidebar-logo">
+    </div>
+
+    <div class="sidebar-icons d-flex flex-column align-items-center">
+        <a href="#!/checkout" class="sidebar-icon-box" ng-class="{ 'active': $location.path() == '/checkout' }">
+            <iconify-icon icon="material-symbols:shopping-cart-checkout-rounded"></iconify-icon>
+        </a>
+
+        <a href="#!/sales" class="sidebar-icon-box" ng-class="{ 'active': $location.path() == '/sales' }">
+            <iconify-icon icon="tabler:report-money"></iconify-icon>
+        </a>
+
+        <a href="#!/products" class="sidebar-icon-box" ng-class="{ 'active': $location.path() == '/products' }">
+            <iconify-icon icon="icon-park-outline:ad-product"></iconify-icon>
+        </a>
+
+        <a href="#!/suppliers" class="sidebar-icon-box" ng-class="{ 'active': $location.path() == '/suppliers' }">
+            <iconify-icon icon="mingcute:truck-line"></iconify-icon>
+        </a>
+
+        <a href="#!/employees" class="sidebar-icon-box" ng-if="currentUserRole == 'admin'" ng-class="{ 'active': $location.path() == '/employees' }">
+            <iconify-icon icon="lucide:users"></iconify-icon>
+        </a>
+
+        <a href="#!/preferences" class="sidebar-icon-box" ng-if="currentUserRole == 'admin'" ng-class="{ 'active': $location.path() == '/preferences' }">
+            <iconify-icon icon="lucide:settings-2"></iconify-icon>
+        </a>
+    </div>
+</div>
